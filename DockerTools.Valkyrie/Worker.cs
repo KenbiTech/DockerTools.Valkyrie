@@ -7,26 +7,23 @@ namespace Kenbi.DockerTools.Valkyrie;
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
-    private readonly string? _uri;
     private readonly string _instanceId;
 
     public Worker(ILogger<Worker> logger, IConfiguration configuration)
     {
         _logger = logger;
-        _uri = configuration.GetSection("Uri").Value;
         _instanceId = configuration.GetSection("InstanceId").Value;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("Starting Valkyrie...");
-        _logger.LogInformation("Uri: {Uri}", _uri);
         _logger.LogInformation("Instance Id: {InstanceId}", _instanceId);
         
         
         Thread.Sleep(new TimeSpan(0, 1, 30));
 
-        using (var client = string.IsNullOrWhiteSpace(_uri) ? new DockerClientConfiguration().CreateClient() : new DockerClientConfiguration(new Uri(_uri)).CreateClient())
+        using (var client = new DockerClientConfiguration().CreateClient())
         {
             _logger.LogInformation("Getting affected containers...");
             var ids = (await client.Containers.ListContainersAsync(

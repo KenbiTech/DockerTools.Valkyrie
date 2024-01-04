@@ -3,7 +3,6 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
-ENV uri=a
 ENV instanceId=1
 WORKDIR /src
 COPY ["DockerTools.Valkyrie/DockerTools.Valkyrie.csproj", "DockerTools.Valkyrie/"]
@@ -19,4 +18,5 @@ RUN dotnet publish "DockerTools.Valkyrie.csproj" -c $BUILD_CONFIGURATION -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT dotnet Kenbi.DockerTools.Valkyrie.dll Uri=$uri InstanceId=$instanceId
+ENTRYPOINT ["dotnet", "Kenbi.DockerTools.Valkyrie.dll"]
+CMD InstanceId $instanceId
