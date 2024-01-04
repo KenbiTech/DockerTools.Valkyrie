@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-DockerTools.Valkyrie-797AF462-BBFE-43CE-AB25-14593BC786E0</UserSecretsId>
+        <AssemblyName>Kenbi.DockerTools.Valkyrie</AssemblyName>
+        <RootNamespace>Kenbi.DockerTools.Valkyrie</RootNamespace>
+        <GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Docker.DotNet" Version="3.125.15" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Dockerfile" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+      <Content Include="..\Dockerfile">
+        <Link>Dockerfile</Link>
+      </Content>
+    </ItemGroup>
+</Project>
