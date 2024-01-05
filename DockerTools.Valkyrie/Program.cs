@@ -11,8 +11,7 @@ public static class Program
         using (var source = new CancellationTokenSource())
         {
             source.CancelAfter(new TimeSpan(0, 2, 0));
-            var token = source.Token;
-            await host.RunAsync(token);
+            await host.RunAsync(source.Token);
         }
     }
 }
